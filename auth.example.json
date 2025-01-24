@@ -1,0 +1,16 @@
+{
+  "http-basic": {
+    "wpackagist.onebyte.ch": {
+      "username": "API_KEY_HERE",
+      "password": "satispress"
+    },
+    "composer.deliciousbrains.com": {
+      "username": "USERNAME_HERE",
+      "password": "PASSWORD_HERE"
+    },
+    "connect.advancedcustomfields.com": {
+      "username": "LICENSE_KEY",
+      "password": "SITE_URL"
+    }
+  }
+}

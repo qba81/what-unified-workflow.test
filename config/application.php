@@ -28,14 +28,14 @@ $root_dir = dirname(__DIR__);
  *
  * @var string
  */
-$webroot_dir = $root_dir . '/web';
+$webroot_dir = $root_dir.'/web';
 
 /**
  * Use Dotenv to set required environment variables and load .env file in root
  * .env.local will override .env if it exists
  */
-if (file_exists($root_dir . '/.env')) {
-    $env_files = file_exists($root_dir . '/.env.local')
+if (file_exists($root_dir.'/.env')) {
+    $env_files = file_exists($root_dir.'/.env.local')
         ? ['.env', '.env.local']
         : ['.env'];
 
@@ -49,7 +49,7 @@ if (file_exists($root_dir . '/.env')) {
     $dotenv->load();
 
     $dotenv->required(['WP_HOME', 'WP_SITEURL']);
-    if (!env('DATABASE_URL')) {
+    if (! env('DATABASE_URL')) {
         $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD']);
     }
 }
@@ -63,7 +63,7 @@ define('WP_ENV', env('WP_ENV') ?: 'production');
 /**
  * Infer WP_ENVIRONMENT_TYPE based on WP_ENV
  */
-if (!env('WP_ENVIRONMENT_TYPE') && in_array(WP_ENV, ['production', 'staging', 'development', 'local'])) {
+if (! env('WP_ENVIRONMENT_TYPE') && in_array(WP_ENV, ['production', 'staging', 'development', 'local'])) {
     Config::define('WP_ENVIRONMENT_TYPE', WP_ENV);
 }
 
@@ -77,8 +77,8 @@ Config::define('WP_SITEURL', env('WP_SITEURL'));
  * Custom Content Directory
  */
 Config::define('CONTENT_DIR', '/app');
-Config::define('WP_CONTENT_DIR', $webroot_dir . Config::get('CONTENT_DIR'));
-Config::define('WP_CONTENT_URL', Config::get('WP_HOME') . Config::get('CONTENT_DIR'));
+Config::define('WP_CONTENT_DIR', $webroot_dir.Config::get('CONTENT_DIR'));
+Config::define('WP_CONTENT_URL', Config::get('WP_HOME').Config::get('CONTENT_DIR'));
 
 /**
  * DB settings
@@ -143,6 +143,29 @@ Config::define('SCRIPT_DEBUG', false);
 ini_set('display_errors', '0');
 
 /**
+ * Advanced Custom Fields Pro License
+ */
+Config::define('ACF_PRO_LICENSE', env('ACF_PRO_LICENSE'));
+
+/**
+ * Cache (WP Rocket)
+ * WP_CACHE true in environments/production.php
+ * For Advanced rules @see https://docs.wp-rocket.me/article/7-enabling-white-label
+ */
+Config::define('WP_CACHE', env('WP_CACHE') ?: false);
+Config::define('WP_ROCKET_EMAIL', env('WP_ROCKET_EMAIL'));
+Config::define('WP_ROCKET_KEY', env('WP_ROCKET_KEY'));
+Config::define('WP_ROCKET_WHITE_LABEL_FOOTPRINT', env('WP_ROCKET_WHITE_LABEL_FOOTPRINT'));
+Config::define('WP_ROCKET_WHITE_LABEL_ACCOUNT', env('WP_ROCKET_WHITE_LABEL_ACCOUNT'));
+
+/**
+ * WP Migrate DB Pro
+ */
+if ($WPMDB_LICENCE = env('WPMDB_LICENCE')) {
+    Config::define('WPMDB_LICENCE', $WPMDB_LICENCE);
+}
+
+/**
  * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
  * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
  */
@@ -150,7 +173,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROT
     $_SERVER['HTTPS'] = 'on';
 }
 
-$env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
+$env_config = __DIR__.'/environments/'.WP_ENV.'.php';
 
 if (file_exists($env_config)) {
     require_once $env_config;
@@ -161,6 +184,6 @@ Config::apply();
 /**
  * Bootstrap WordPress
  */
-if (!defined('ABSPATH')) {
-    define('ABSPATH', $webroot_dir . '/wp/');
+if (! defined('ABSPATH')) {
+    define('ABSPATH', $webroot_dir.'/wp/');
 }
