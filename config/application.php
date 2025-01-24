@@ -152,7 +152,7 @@ Config::define('ACF_PRO_LICENSE', env('ACF_PRO_LICENSE'));
  * WP_CACHE true in environments/production.php
  * For Advanced rules @see https://docs.wp-rocket.me/article/7-enabling-white-label
  */
-Config::define('WP_CACHE', env('WP_CACHE') ?: false);
+//Config::define('WP_CACHE', env('WP_CACHE') ?: false);
 Config::define('WP_ROCKET_EMAIL', env('WP_ROCKET_EMAIL'));
 Config::define('WP_ROCKET_KEY', env('WP_ROCKET_KEY'));
 Config::define('WP_ROCKET_WHITE_LABEL_FOOTPRINT', env('WP_ROCKET_WHITE_LABEL_FOOTPRINT'));
